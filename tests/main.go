@@ -1,7 +1,7 @@
 package main
 
-import "github.com/SusanHex/RE-Actor/tests/coffee"
+import "github.com/SusanHex/RE-Actor/tests/test_programs"
 
 func main() {
-	coffee.Coffee()
+	test_programs.Coffee()
 }

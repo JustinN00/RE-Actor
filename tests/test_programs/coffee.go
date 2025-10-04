@@ -1,4 +1,4 @@
-package coffee
+package test_programs
 
 import(
 	"fmt"
