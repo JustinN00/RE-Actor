@@ -1,9 +1,7 @@
 package main
 
+import "github.com/SusanHex/RE-Actor/tests/coffee"
+
 func main() {
-	susan_testing()
-<<<<<<< HEAD
+	coffee.Coffee()
 }
-=======
-}
->>>>>>> 6754f7cd01922711aed44645436479dd4fe7c3c3
