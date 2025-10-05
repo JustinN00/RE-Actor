@@ -1,15 +1,16 @@
 package test_programs
 
-import(
+import (
 	"fmt"
 	"regexp"
 )
 
-func CoffeeTest(){
-	
+func CoffeeTest() {
+
 	fmt.Print("Coffee Test")
 	FindingAll()
 	FindingAllString()
+	FindingSub()
 
 }
 
@@ -25,4 +26,10 @@ func FindingAllString() {
 	fmt.Println(re.FindAllString("paranormal", 2))
 	fmt.Println(re.FindAllString("graal", -1))
 	fmt.Println(re.FindAllString("none", -1))
+}
+
+func FindingSub() {
+	re := regexp.MustCompile(`foo(.?)`)
+	fmt.Printf("%q\n", re.FindAllSubmatch([]byte(`seafood fool`), -1))
+
 }
