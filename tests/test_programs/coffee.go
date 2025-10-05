@@ -32,4 +32,10 @@ func FindingSub() {
 	re := regexp.MustCompile(`foo(.?)`)
 	fmt.Printf("%q\n", re.FindAllSubmatch([]byte(`seafood fool`), -1))
 
+	re2 := regexp.MustCompile(`a(x*)b`)
+	fmt.Printf("%q\n", re2.FindAllStringSubmatch("-ab-", -1))
+	fmt.Printf("%q\n", re2.FindAllStringSubmatch("-axxb-", -1))
+	fmt.Printf("%q\n", re2.FindAllStringSubmatch("-ab-axb-", -1))
+	fmt.Printf("%q\n", re2.FindAllStringSubmatch("-axxb-ab-", -1))
+
 }
