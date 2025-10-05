@@ -23,7 +23,7 @@ func main() {
 	case "":
 
 		fmt.Println("User Not Found")
-		fmt.Println("\nCreat a custom enviroment varibal called DEV_USER and set it to your GitHub name")
+		fmt.Println("\nCreate a custom enviroment variable called DEV_USER and set it to your GitHub name")
 
 	default:
 
