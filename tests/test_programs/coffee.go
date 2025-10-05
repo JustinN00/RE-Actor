@@ -4,6 +4,7 @@ import(
 	"fmt"
 )
 
-func Coffee(){
+func CoffeeTest(){
+	
 	fmt.Print("Coffee Test")
 }
