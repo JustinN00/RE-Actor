@@ -12,3 +12,4 @@ Here is a list of milestones indicating the progress of the project:
   2. close the terminal and vscode
   3. reopen vscode
   4. type "$DEV_USER" it should print out SusanHex
+  5. delete the instructions when finished
