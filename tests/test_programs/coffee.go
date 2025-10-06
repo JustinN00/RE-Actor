@@ -3,44 +3,31 @@ package test_programs
 import (
 	"fmt"
 	"regexp"
+	"strings"
 )
 
 func CoffeeTest() {
 
-	fmt.Print("Coffee Test")
-	// FindingAll()
-	// FindingAllString()
-	FindingSub()
+	fmt.Print("Coffee Test\n\n")
 
-}
+	teststring := "5.10.2025 17:17:52 [Server Event] Player SueHex left."
+	check := regexp.MustCompile(`Player`)
+	checking := check.FindAllSubmatch([]byte(teststring), -1)
 
-func FindingAll() {
-	re := regexp.MustCompile(`foo.?`)
-	fmt.Printf("%q\n", re.FindAll([]byte(`seafood fool`), -1))
+	if len(checking) > 0 {
+		fmt.Print("player found\n")
+		ev := regexp.MustCompile(`Player (.*?)\.`)
 
-}
+		event := ev.FindStringSubmatch(teststring)
+		eventstring := event[1]
+		fmt.Printf("%T\n\n",eventstring)
 
-func FindingAllString() {
-	re := regexp.MustCompile(`a.`)
-	fmt.Println(re.FindAllString("paranormal", -1))
-	fmt.Println(re.FindAllString("paranormal", 2))
-	fmt.Println(re.FindAllString("graal", -1))
-	fmt.Println(re.FindAllString("none", -1))
-}
+		split := strings.Split(eventstring, " ")
+		player := split[0]
+		action := split[1]
 
-func FindingSub() {
-	re := regexp.MustCompile(`foo(.?)`)
-	fmt.Printf("%q\n", re.FindAllSubmatch([]byte(`seafood fool`), -1))
-
-	re2 := regexp.MustCompile(`foo(.?)`)
-	fmt.Printf("%q\n", re2.FindAllStringSubmatch(`seafood fool`, -1))
-
-	/*
-	re3 := regexp.MustCompile(`a(x*)b`)
-	fmt.Printf("%q\n", re3.FindAllStringSubmatch("-ab-", -1))
-	fmt.Printf("%q\n", re3.FindAllStringSubmatch("-axxb-", -1))
-	fmt.Printf("%q\n", re3.FindAllStringSubmatch("-ab-axb-", -1))
-	fmt.Printf("%q\n", re3.FindAllStringSubmatch("-axxb-ab-", -1))
-	*/
+		fmt.Println(player)
+		fmt.Println(action)
+	}
 
 }
