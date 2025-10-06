@@ -22,9 +22,7 @@ func CoffeeTest() {
 		eventstring := event[1]
 		fmt.Printf("%T\n\n",eventstring)
 
-		split := strings.Split(eventstring, " ")
-		player := split[0]
-		action := split[1]
+		split := strings.Split(eventstring, " "); player, action := split[0], split[1]
 
 		fmt.Println(player)
 		fmt.Println(action)
