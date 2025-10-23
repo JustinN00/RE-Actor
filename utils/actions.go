@@ -8,8 +8,8 @@ import (
 )
 
 type DiscordWebHook struct {
-	id    string
-	token string
+	Id    string
+	Token string
 }
 
 func (dwh *DiscordWebHook) post_message(message string) {
