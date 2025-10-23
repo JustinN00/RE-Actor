@@ -14,6 +14,7 @@ import (
 func SusanTest() {
 
 	fmt.Println("Starting Susan Testing function")
+	// What does this do?
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	cli, err := client.NewClientWithOpts(client.FromEnv)
@@ -21,11 +22,13 @@ func SusanTest() {
 		panic(err)
 	}
 
+	// What does this do?
 	containers, err := cli.ContainerList(context.Background(), container.ListOptions{})
 	if err != nil {
 		panic(err)
 	}
 
+	// What does this do?
 	for _, ctr := range containers {
 		reader, err := cli.ContainerLogs(ctx, ctr.ID, container.LogsOptions{
 			ShowStdout: true,
