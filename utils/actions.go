@@ -12,8 +12,8 @@ type DiscordWebHook struct {
 	Token string
 }
 
-func (dwh *DiscordWebHook) post_message(message string) {
-	url := fmt.Sprintf("https://discord.com/api/webhook/%s/%s", dwh.id, dwh.token)
+func (dwh *DiscordWebHook) PostMessage(message string) {
+	url := fmt.Sprintf("https://discord.com/api/webhook/%s/%s", dwh.Id, dwh.Token)
 	body := fmt.Sprintf("{\"content\":\"%s\"}", message)
 	req, err := http.NewRequest("POST", url, strings.NewReader(body))
 	if err != nil {
