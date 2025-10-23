@@ -7,9 +7,4 @@ Here is a list of milestones indicating the progress of the project:
  2. ❌ Perform pattern matching against the logs.
  3. ❌ Perform an action, eg a web request.
 
- Sue  follow the steps
-  1. type "export DEV_USER=SusanHex" in terminal
-  2. close the terminal and vscode
-  3. reopen vscode
-  4. type "$DEV_USER" it should print out SusanHex
-  5. delete the instructions when finished
+For Kohi todo:
