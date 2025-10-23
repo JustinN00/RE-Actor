@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
+	"log/slog"
 	"time"
 
 	"github.com/docker/docker/api/types/container"
@@ -32,16 +32,16 @@ func SusanTest() {
 			ShowStderr: true,
 		})
 		if err != nil {
-			log.Fatal(err)
+			panic(err)
 		}
 		for {
 			message, err := io.ReadAll(reader)
 			if err != nil {
-				log.Fatal(err)
+				panic(err)
 			} else if len(message) == 0 {
 				break
 			}
-			log.Println(string(message))
+			slog.Info(string(message))
 		}
 	}
 }
