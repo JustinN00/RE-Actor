@@ -6,10 +6,6 @@ import (
 	"strings"
 )
 
-type Action interface {
-	Act(string) error
-}
-
 type DiscordWebHook struct {
 	URL string
 }
