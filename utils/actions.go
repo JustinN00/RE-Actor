@@ -1,10 +1,14 @@
-package utils
+package actions
 
 import (
 	"fmt"
 	"net/http"
 	"strings"
 )
+
+type Action interface {
+	Act(string) error
+}
 
 type DiscordWebHook struct {
 	URL string
@@ -19,4 +23,9 @@ func (dwh *DiscordWebHook) PostMessage(message string) (*http.Response, error) {
 	client := http.Client{}
 	response, err := client.Post(dwh.URL, "Application/json", strings.NewReader(body))
 	return response, err
+}
+
+func (dwh *DiscordWebHook) Act(message string) error {
+	_, err := dwh.PostMessage(message)
+	return err
 }
