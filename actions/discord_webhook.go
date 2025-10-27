@@ -10,7 +10,7 @@ type DiscordWebHook struct {
 	URL string
 }
 
-func (dwh *DiscordWebHook) PostMessage(message string) (*http.Response, error) {
+func (dwh DiscordWebHook) PostMessage(message string) (*http.Response, error) {
 	// Discord only allows a max of 2000 characters in the content field.
 	if len(message) > 2000 {
 		return nil, fmt.Errorf("message of %d characters is larger than the max of 2000 allowed for Discord", len(message))
@@ -21,7 +21,7 @@ func (dwh *DiscordWebHook) PostMessage(message string) (*http.Response, error) {
 	return response, err
 }
 
-func (dwh *DiscordWebHook) Act(message string) error {
+func (dwh DiscordWebHook) Act(message string) error {
 	_, err := dwh.PostMessage(message)
 	return err
 }
