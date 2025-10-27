@@ -4,9 +4,11 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package main
 
 import (
+	"fmt"
 	"log/slog"
 
 	"github.com/SusanHex/RE-Actor/config"
+	"github.com/SusanHex/RE-Actor/utils"
 	"github.com/spf13/viper"
 )
 
@@ -22,4 +24,9 @@ func main() {
 		panic(err)
 	}
 	slog.Info("Current config: ", "Action", app_config.ActionName, "Pattern:", app_config.Pattern, "Template", app_config.Template)
+	action, err := utils.SelectAction(app_config.ActionName)
+	if err != nil {
+		panic(err)
+	}
+	slog.Info(fmt.Sprintf(`Found action "%T"`, action))
 }
