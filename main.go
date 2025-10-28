@@ -18,6 +18,7 @@ func main() {
 	viper_instance.BindEnv("pattern")
 	viper_instance.BindEnv("template")
 	viper_instance.BindEnv("action_name")
+	viper_instance.BindEnv("container_name")
 	viper_instance.AutomaticEnv()
 	err := viper_instance.UnmarshalExact(&app_config)
 	if err != nil {
