@@ -24,7 +24,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	slog.Info("Current config: ", "Action", app_config.ActionName, "Pattern:", app_config.Pattern, "Template", app_config.Template)
+	slog.Info("Current config: ", "Container name",app_config.ContainerName, "Action", app_config.ActionName, "Pattern:", app_config.Pattern, "Template", app_config.Template)
 	action, err := utils.SelectAction(app_config.ActionName)
 	if err != nil {
 		panic(err)
