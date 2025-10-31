@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
-	"regexp"
 	"time"
 
 	"github.com/SusanHex/RE-Actor/config"
@@ -20,23 +19,12 @@ import (
 )
 
 func main() {
-	app_config := config.Config{}
 	viper_instance := viper.NewWithOptions()
-	viper_instance.BindEnv("pattern")
-	viper_instance.BindEnv("template")
-	viper_instance.BindEnv("action_name")
-	viper_instance.BindEnv("container_name")
-	viper_instance.AutomaticEnv()
-	err := viper_instance.UnmarshalExact(&app_config)
+	app_config, err := config.GetConfigFromViper(viper_instance)
 	if err != nil {
 		panic(err)
 	}
-	compiled_pattern, err := regexp.Compile(app_config.Pattern)
-	if err != nil {
-		panic(err)
-	}
-	slog.Info("Current config: ", "Container name", app_config.ContainerName, "Action", app_config.ActionName, "Pattern:", app_config.Pattern, "Template", app_config.Template)
-	slog.Debug("Here is the", "compiled attern", fmt.Sprintf("%T", compiled_pattern))
+	slog.Info("Current config:", "Container name", app_config.ContainerName, "Action", app_config.ActionName, "Pattern", app_config.Pattern, "Template", app_config.Template)
 	action, err := utils.SelectAction(app_config.ActionName)
 	if err != nil {
 		panic(err)
