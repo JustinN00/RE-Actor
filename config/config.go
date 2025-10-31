@@ -8,7 +8,7 @@ import (
 
 type Config struct {
 	ContainerName   string `mapstructure:"container_name"`
-	Pattern         []byte `mapstructure:"pattern"`
+	Pattern         string `mapstructure:"pattern"`
 	Template        []byte `mapstructure:"template"`
 	ActionName      string `mapstructure:"action_name"`
 	CompiledPattern *regexp.Regexp
