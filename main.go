@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"regexp"
 	"time"
 
 	"github.com/SusanHex/RE-Actor/config"
@@ -30,7 +31,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	compiled_pattern, err := regexp.Compile(app_config.Pattern)
+	if err != nil {
+		panic(err)
+	}
 	slog.Info("Current config: ", "Container name", app_config.ContainerName, "Action", app_config.ActionName, "Pattern:", app_config.Pattern, "Template", app_config.Template)
+	slog.Debug("Here is the", "compiled attern", fmt.Sprintf("%T", compiled_pattern))
 	action, err := utils.SelectAction(app_config.ActionName)
 	if err != nil {
 		panic(err)
