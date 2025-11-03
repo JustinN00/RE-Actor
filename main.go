@@ -48,7 +48,7 @@ func main() {
 	} else if len(containers) == 0 {
 		panic(fmt.Sprintf(`Could not find a container named "%s"`, app_config.ContainerName))
 	} else if len(containers) > 1 {
-		panic(fmt.Sprintf(`Container name: "%s" matched %s containers. Please ensure that the container name is unique to one container.`, app_config.ContainerName, len(containers)))
+		panic(fmt.Sprintf(`Container name: "%s" matched %d containers. Please ensure that the container name is unique to one container.`, app_config.ContainerName, len(containers)))
 	}
 	ctr := containers[0]
 	reader, err := cli.ContainerLogs(ctx, ctr.ID, container.LogsOptions{
