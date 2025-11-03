@@ -24,6 +24,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	err = utils.SetupLogger(app_config)
+	if err != nil {
+		panic(err)
+	}
 	slog.Info("Current config:", "Container name", app_config.ContainerName, "Action", app_config.ActionName, "Pattern", app_config.Pattern, "Template", app_config.Template)
 	action, err := utils.SelectAction(app_config.ActionName, app_config)
 	if err != nil {
