@@ -28,12 +28,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	slog.Info("Current config:", "Container name", app_config.ContainerName, "Action", app_config.ActionName, "Pattern", app_config.Pattern, "Template", app_config.Template)
+	slog.Debug("Current", "config", fmt.Sprintf("%+v", app_config))
 	action, err := utils.SelectAction(app_config.ActionName, app_config)
 	if err != nil {
 		panic(err)
 	}
-	slog.Info(fmt.Sprintf(`Found action "%T"`, action))
+	slog.Debug(fmt.Sprintf(`Found action "%T"`, action))
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	cli, err := client.NewClientWithOpts(client.FromEnv)
@@ -51,6 +51,7 @@ func main() {
 		panic(fmt.Sprintf(`Container name: "%s" matched %d containers. Please ensure that the container name is unique to one container.`, app_config.ContainerName, len(containers)))
 	}
 	ctr := containers[0]
+	slog.Debug("Found container:", "ID", ctr.ID)
 	reader, err := cli.ContainerLogs(ctx, ctr.ID, container.LogsOptions{
 		ShowStdout: true,
 		ShowStderr: true,
@@ -66,6 +67,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+		slog.Debug(fmt.Sprintf(`Got message "%v"`, message[8:]))
 		err = utils.PerformActionIfMatch(app_config, action, message[8:])
 		if err != nil {
 			panic(err)

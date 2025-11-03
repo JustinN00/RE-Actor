@@ -2,6 +2,7 @@ package actions
 
 import (
 	"fmt"
+	"log/slog"
 	"net/http"
 	"strings"
 )
@@ -18,6 +19,7 @@ func (dwh DiscordWebHook) PostMessage(message string) (*http.Response, error) {
 	body := fmt.Sprintf("{\"content\":\"%s\"}", message)
 	client := http.Client{}
 	response, err := client.Post(dwh.URL, "Application/json", strings.NewReader(body))
+	slog.Debug(fmt.Sprintf(`Discord Webhook Response: "%+v"`, response))
 	return response, err
 }
 

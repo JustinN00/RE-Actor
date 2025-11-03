@@ -27,7 +27,7 @@ func PerformActionIfMatch(app_config *config.Config, action actions.Action, mess
 	}
 	result := []byte{}
 	result = app_config.CompiledPattern.Expand(result, []byte(app_config.Template), message, match_indexes)
-	slog.Info("Acting on", "message", string(result))
+	slog.Info(fmt.Sprintf(`Acting on "%v"`, result))
 	err := action.Act(string(result))
 	return err
 }
