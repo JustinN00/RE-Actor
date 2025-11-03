@@ -32,7 +32,7 @@ func PerformActionIfMatch(app_config *config.Config, action actions.Action, mess
 	return err
 }
 
-func SetupLogger(app_config *config.Config) {
+func SetupLogger(app_config *config.Config) error {
 	var log_level slog.Level
 	add_source := false
 	switch strings.ToUpper(app_config.LogLevel) {
@@ -45,7 +45,10 @@ func SetupLogger(app_config *config.Config) {
 		log_level = slog.LevelWarn
 	case "ERROR":
 		log_level = slog.LevelError
+	default:
+		return fmt.Errorf(`log level of "%s" does not match one of the following: DEBUG, INFO, WARNING, or ERROR`, app_config.LogLevel)
 	}
 	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{AddSource: add_source, Level: log_level}))
 	slog.SetDefault(logger)
+	return nil
 }
