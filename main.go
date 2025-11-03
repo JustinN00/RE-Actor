@@ -25,7 +25,7 @@ func main() {
 		panic(err)
 	}
 	slog.Info("Current config:", "Container name", app_config.ContainerName, "Action", app_config.ActionName, "Pattern", app_config.Pattern, "Template", app_config.Template)
-	action, err := utils.SelectAction(app_config.ActionName)
+	action, err := utils.SelectAction(app_config.ActionName, app_config)
 	if err != nil {
 		panic(err)
 	}
@@ -41,26 +41,30 @@ func main() {
 	containers, err := cli.ContainerList(context.Background(), container.ListOptions{Filters: container_name_filter})
 	if err != nil {
 		panic(err)
-	}
-	if len(containers) == 0 {
+	} else if len(containers) == 0 {
 		panic(fmt.Sprintf(`Could not find a container named "%s"`, app_config.ContainerName))
+	} else if len(containers) > 1 {
+		panic(fmt.Sprintf(`Container name: "%s" matched %s containers. Please ensure that the container name is unique to one container.`, app_config.ContainerName, len(containers)))
 	}
-	for _, ctr := range containers {
-		reader, err := cli.ContainerLogs(ctx, ctr.ID, container.LogsOptions{
-			ShowStdout: true,
-			ShowStderr: true,
-		})
+	ctr := containers[0]
+	reader, err := cli.ContainerLogs(ctx, ctr.ID, container.LogsOptions{
+		ShowStdout: true,
+		ShowStderr: true,
+	})
+	if err != nil {
+		panic(err)
+	}
+	for {
+		message, err := io.ReadAll(reader)
+		if len(message) == 0 {
+			continue
+		}
 		if err != nil {
 			panic(err)
 		}
-		for {
-			message, err := io.ReadAll(reader)
-			if err != nil {
-				panic(err)
-			} else if len(message) == 0 {
-				break
-			}
-			slog.Info(string(message))
+		err = utils.PerformActionIfMatch(app_config, action, message[8:])
+		if err != nil {
+			panic(err)
 		}
 	}
 }
