@@ -55,6 +55,8 @@ func main() {
 	reader, err := cli.ContainerLogs(ctx, ctr.ID, container.LogsOptions{
 		ShowStdout: true,
 		ShowStderr: true,
+		Follow:     true,
+		Tail:       "0",
 	})
 	if err != nil {
 		panic(err)
