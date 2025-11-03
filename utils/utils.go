@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"encoding/binary"
 	"fmt"
+	"io"
 	"log/slog"
 	"os"
 	"strings"
@@ -52,4 +54,19 @@ func SetupLogger(app_config *config.Config) error {
 	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{AddSource: add_source, Level: log_level}))
 	slog.SetDefault(logger)
 	return nil
+}
+
+func GetContainerLog(log_reader io.ReadSeekCloser) ([]byte, error) {
+	header := make([]byte, 8)
+	_, err := log_reader.Read(header)
+	if err != nil {
+		return []byte{}, err
+	}
+	log_message_length := binary.BigEndian.Uint32(header[4:])
+	log_message := make([]byte, log_message_length)
+	_, err = log_reader.Read(log_message)
+	if err != nil {
+		return []byte{}, err
+	}
+	return log_message, nil
 }
