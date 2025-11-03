@@ -3,6 +3,8 @@ package utils
 import (
 	"fmt"
 	"log/slog"
+	"os"
+	"strings"
 
 	"github.com/SusanHex/RE-Actor/actions"
 	"github.com/SusanHex/RE-Actor/config"
@@ -30,3 +32,20 @@ func PerformActionIfMatch(app_config *config.Config, action actions.Action, mess
 	return err
 }
 
+func SetupLogger(app_config *config.Config) {
+	var log_level slog.Level
+	add_source := false
+	switch strings.ToUpper(app_config.LogLevel) {
+	case "DEBUG":
+		log_level = slog.LevelDebug
+		add_source = true
+	case "INFO":
+		log_level = slog.LevelInfo
+	case "WARNING":
+		log_level = slog.LevelWarn
+	case "ERROR":
+		log_level = slog.LevelError
+	}
+	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{AddSource: add_source, Level: log_level}))
+	slog.SetDefault(logger)
+}
