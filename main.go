@@ -62,7 +62,7 @@ func main() {
 		panic(err)
 	}
 	for {
-		message, err := io.ReadAll(reader)
+		message, err := utils.GetContainerLog(reader)
 		if len(message) == 0 {
 			continue
 		}
