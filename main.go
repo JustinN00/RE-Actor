@@ -67,7 +67,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		slog.Debug(fmt.Sprintf(`Got message "%v"`, message[8:]))
+		slog.Debug(fmt.Sprintf(`Got message of %d bytes`, len(message)))
 		err = utils.PerformActionIfMatch(app_config, action, message[8:])
 		if err != nil {
 			panic(err)
