@@ -7,11 +7,12 @@ import (
 )
 
 type Config struct {
-	ContainerName   string `mapstructure:"container_name"`
-	Pattern         string `mapstructure:"pattern"`
-	Template        []byte `mapstructure:"template"`
-	ActionName      string `mapstructure:"action_name"`
-	CompiledPattern *regexp.Regexp
+	ContainerName     string `mapstructure:"container_name"`
+	Pattern           string `mapstructure:"pattern"`
+	Template          string `mapstructure:"template"`
+	ActionName        string `mapstructure:"action_name"`
+	DiscordWebHookURL string `mapstructure:"discord_webhook_url"`
+	CompiledPattern   *regexp.Regexp
 }
 
 func GetConfigFromViper(viper_instance *viper.Viper) (*Config, error) {
@@ -20,6 +21,7 @@ func GetConfigFromViper(viper_instance *viper.Viper) (*Config, error) {
 	viper_instance.BindEnv("template")
 	viper_instance.BindEnv("action_name")
 	viper_instance.BindEnv("container_name")
+	viper_instance.BindEnv("discord_webhook_url")
 	viper_instance.AutomaticEnv()
 	err := viper_instance.UnmarshalExact(&app_config)
 	if err != nil {
