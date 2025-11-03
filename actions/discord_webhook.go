@@ -2,6 +2,7 @@ package actions
 
 import (
 	"fmt"
+	"io"
 	"log/slog"
 	"net/http"
 	"strings"
@@ -19,7 +20,14 @@ func (dwh DiscordWebHook) PostMessage(message string) (*http.Response, error) {
 	body := fmt.Sprintf("{\"content\":\"%s\"}", message)
 	client := http.Client{}
 	response, err := client.Post(dwh.URL, "Application/json", strings.NewReader(body))
-	slog.Debug(fmt.Sprintf(`Discord Webhook Response: "%+v"`, response))
+	slog.Debug("Discord Webhook Response:", "Status Code", response.StatusCode, "Status", response.Status)
+	if response.StatusCode < 200 || response.StatusCode >= 300 {
+		response_content, err := io.ReadAll(response.Body)
+		if err != nil {
+			slog.Error("Error reading response body: ", "Error", err)
+		}
+		slog.Debug(fmt.Sprintf(`Response Content: "%s"`, response_content))
+	}
 	return response, err
 }
 
