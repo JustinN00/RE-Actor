@@ -56,7 +56,7 @@ func SetupLogger(app_config *config.Config) error {
 	return nil
 }
 
-func GetContainerLog(log_reader io.ReadSeekCloser) ([]byte, error) {
+func GetContainerLog(log_reader io.ReadCloser) ([]byte, error) {
 	header := make([]byte, 8)
 	_, err := log_reader.Read(header)
 	if err != nil {
