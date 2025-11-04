@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bufio"
 	"encoding/binary"
 	"fmt"
 	"io"
@@ -56,12 +57,24 @@ func SetupLogger(app_config *config.Config) error {
 	return nil
 }
 
-func GetContainerLog(log_reader io.ReadCloser) ([]byte, error) {
+func GetContainerLog(log_reader io.Reader, is_tty bool) ([]byte, error) {
+	if is_tty {
+		buf_reader := bufio.NewReader(log_reader)
+		raw_log_message, err := buf_reader.ReadString('\n')
+		if err != nil {
+			return []byte{}, err
+		}
+		return []byte(strings.TrimSpace(raw_log_message)), nil
+	}
 	header := make([]byte, 8)
-	_, err := log_reader.Read(header)
+	head_bytes_read, err := log_reader.Read(header)
+	if head_bytes_read < 8 {
+		return []byte{}, nil
+	}
 	if err != nil {
 		return []byte{}, err
 	}
+	slog.Debug(string(header))
 	log_message_length := binary.BigEndian.Uint32(header[4:])
 	log_message := make([]byte, log_message_length)
 	_, err = log_reader.Read(log_message)
@@ -69,4 +82,5 @@ func GetContainerLog(log_reader io.ReadCloser) ([]byte, error) {
 		return []byte{}, err
 	}
 	return log_message, nil
+
 }
