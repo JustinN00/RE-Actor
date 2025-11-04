@@ -50,18 +50,22 @@ func main() {
 		panic(fmt.Sprintf(`Container name: "%s" matched %d containers. Please ensure that the container name is unique to one container.`, app_config.ContainerName, len(containers)))
 	}
 	ctr := containers[0]
-	slog.Debug("Found container:", "ID", ctr.ID)
+	ctr_inspection, err := cli.ContainerInspect(ctx, ctr.ID)
+	if err != nil {
+		panic(err)
+	}
+	is_tty := ctr_inspection.Config.Tty
+	slog.Debug("Found container:", "ID", ctr.ID, "TTY", is_tty)
 	reader, err := cli.ContainerLogs(ctx, ctr.ID, container.LogsOptions{
 		ShowStdout: true,
 		ShowStderr: true,
 		Follow:     true,
-		Tail:       "0",
 	})
 	if err != nil {
 		panic(err)
 	}
 	for {
-		message, err := utils.GetContainerLog(reader)
+		message, err := utils.GetContainerLog(reader, is_tty)
 		if len(message) == 0 {
 			continue
 		}
