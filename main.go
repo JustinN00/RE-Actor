@@ -7,7 +7,6 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
-	"time"
 
 	"github.com/SusanHex/RE-Actor/config"
 	"github.com/SusanHex/RE-Actor/utils"
@@ -33,8 +32,7 @@ func main() {
 		panic(err)
 	}
 	slog.Debug(fmt.Sprintf(`Found action "%T"`, action))
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	if err != nil {
 		panic(err)
@@ -60,17 +58,18 @@ func main() {
 		ShowStdout: true,
 		ShowStderr: true,
 		Follow:     true,
+		Tail:       "1",
 	})
 	if err != nil {
 		panic(err)
 	}
 	for {
 		message, err := utils.GetContainerLog(reader, is_tty)
-		if len(message) == 0 {
-			continue
-		}
 		if err != nil {
 			panic(err)
+		}
+		if len(message) == 0 {
+			continue
 		}
 		slog.Debug(fmt.Sprintf(`Got message of %d bytes`, len(message)))
 		err = utils.PerformActionIfMatch(app_config, action, message)
