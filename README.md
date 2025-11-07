@@ -1,6 +1,6 @@
 # RE-Actor
 
-Hi! Thanks for coming to look at RE-Actor! This application is intended to apply a Regular Expression based pattern to the logs of a Docker container. If the pattern matches the log, then the values are interpolated into the supplied template. Once that is complete, the resulting value will be sent to the selected action. Currently, the only supported action is posting a message to a Discord webhook.
+Hi! Thanks for coming to look at RE-Actor! This application is intended to apply a Regular Expression based pattern to the logs of a Docker container. If the pattern matches the log, then the values are copied into the supplied template. Once complete, the resulting value will be sent to the selected action. Currently, the only supported action is posting a message to a Discord webhook.
 
 Here is a list of environment variables that are used to configure RE-Actor:
 
