@@ -18,6 +18,8 @@ func SelectAction(action_name string, app_config *config.Config) (actions.Action
 	switch action_name {
 	case "discord_webhook":
 		return actions.DiscordWebHook{URL: app_config.DiscordWebHookURL}, nil
+	case "test":
+		return actions.TestAction{}, nil
 	default:
 		return nil, fmt.Errorf(`"%s" does not match an action`, action_name)
 	}
