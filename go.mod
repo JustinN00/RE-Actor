@@ -2,8 +2,6 @@ module github.com/SusanHex/RE-Actor
 
 go 1.24.0
 
-require github.com/spf13/cobra v1.8.1 // direct
-
 require (
 	github.com/docker/docker v28.5.1+incompatible
 	github.com/spf13/viper v1.21.0
@@ -22,7 +20,6 @@ require (
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
-	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/moby/sys/atomicwriter v0.1.0 // indirect
 	github.com/moby/term v0.5.2 // indirect
