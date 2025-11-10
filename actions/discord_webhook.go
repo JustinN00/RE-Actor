@@ -25,10 +25,10 @@ func (dwh DiscordWebHook) PostMessage(message string) (*http.Response, error) {
 		Content: message,
 	}
 	body_bytes, err := json.Marshal(body_struct)
-	body := string(body_bytes)
 	if err != nil {
 		return nil, err
 	}
+	body := string(body_bytes)
 	client := http.Client{}
 	response, err := client.Post(dwh.URL, "Application/json", strings.NewReader(body))
 	slog.Debug("Discord Webhook Response:", "Status Code", response.StatusCode, "Status", response.Status)
