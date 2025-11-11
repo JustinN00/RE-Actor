@@ -1,6 +1,7 @@
 package actions
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log/slog"
@@ -17,7 +18,17 @@ func (dwh DiscordWebHook) PostMessage(message string) (*http.Response, error) {
 	if len(message) > 2000 {
 		return nil, fmt.Errorf("message of %d characters is larger than the max of 2000 allowed for Discord", len(message))
 	}
-	body := fmt.Sprintf("{\"content\":\"%s\"}", message)
+
+	body_struct := struct {
+		Content string `json:"content"`
+	}{
+		Content: message,
+	}
+	body_bytes, err := json.Marshal(body_struct)
+	if err != nil {
+		return nil, err
+	}
+	body := string(body_bytes)
 	client := http.Client{}
 	response, err := client.Post(dwh.URL, "Application/json", strings.NewReader(body))
 	slog.Debug("Discord Webhook Response:", "Status Code", response.StatusCode, "Status", response.Status)
