@@ -4,7 +4,7 @@ Hi! Thanks for coming to look at RE-Actor! This application is intended to apply
 
 Here is a list of environment variables that are used to configure RE-Actor:
 
-| Required |
+**Required**
 | Variable Name | Description |
 |---------------|-------------|
 | `CONTAINER_NAME` | This is the name of the container you would like RE-Actor to monitor. It should only match one container. |
@@ -13,12 +13,12 @@ Here is a list of environment variables that are used to configure RE-Actor:
 | `TEMPLATE` | if the current log message matches your pattern, this defines how the output will look. Please refer to the previous linked resource for help on this. |
 | `LOG_LEVEL` | This variable is optional, but determines how verobose the logging will be. Here are the valid options: `DEBUG`, `INFO`, `WARNING`, and `ERROR`. The default value is `INFO`, if not set. |
 
-| Discord Webhook |
+**Discord Webhook**
 | Variable Name | Description |
 |---------------|-------------|
 | `DISCORD_WEBHOOK_URL` | This is the webhook that RE-Actor will post the resulting message to. |
 
-| SMTP |
+**SMTP**
 | Variable Name | Description |
 |---------------|-------------|
 | `SMPTP_HOST` | The SMTP host you are using. |
