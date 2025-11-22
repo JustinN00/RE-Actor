@@ -24,6 +24,7 @@ func SelectAction(action_name string, app_config *config.Config) (actions.Action
 			SMTPPort: app_config.SMTPPort,
 			SendFrom: app_config.SendFrom,
 			SendTo: app_config.SendTo,
+			Subject: app_config.Subject,
 			Password: app_config.Password,
 		}, nil
 	case "test":

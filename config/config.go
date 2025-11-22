@@ -17,6 +17,7 @@ type Config struct {
 	SMTPPort          string `mapstructure:"smtp_port"`
 	SendFrom          string `mapstructure:"send_from"`
 	SendTo            string `mapstructure:"send_to"`
+	Subject           string `mapstructure:"subject"`
 	Password          string `mapstructure:"password"`
 	LogLevel          string `mapstructure:"log_level"`
 	CompiledPattern   *regexp.Regexp
@@ -36,6 +37,7 @@ func GetConfigFromViper(viper_instance *viper.Viper) (*Config, error) {
 	viper_instance.BindEnv("smtp_port")
 	viper_instance.BindEnv("send_from")
 	viper_instance.BindEnv("send_to")
+	viper_instance.BindEnv("subject")
 	viper_instance.BindEnv("password")
 	viper_instance.AutomaticEnv()
 	err := viper_instance.UnmarshalExact(&app_config)

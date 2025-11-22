@@ -2,7 +2,6 @@ package actions
 
 import (
 	"net/smtp"
-	"log/slog"
 )
 
 type SMTPMail struct {
@@ -10,12 +9,13 @@ type SMTPMail struct {
 	SMTPPort string
 	SendFrom string
 	SendTo string
+	Subject string
 	Password string
 }
 
-func (mail SMTPMail) SendMail(message string) (error, error) {
+func (mail SMTPMail) SendMail(message string) (error) {
 	auth := smtp.PlainAuth("", mail.SendFrom, mail.Password, mail.SMTPHost)
-	byte_message := []byte(message)
+	byte_message := []byte("Subject:"+mail.Subject+"\r\n\r\n"+message)
 	err := smtp.SendMail(
 		mail.SMTPHost + ":" + mail.SMTPPort,
 		auth,
@@ -23,13 +23,10 @@ func (mail SMTPMail) SendMail(message string) (error, error) {
 		[]string{mail.SendTo},
 		byte_message,
 	)
-	if err != nil {
-		slog.Error("Error or something")
-	}
-	return nil, err
+	return err
 }
 
 func (mail SMTPMail) Act(message string) error {
-	_, err := mail.SendMail(message)
+	err := mail.SendMail(message)
 	return err
 }
