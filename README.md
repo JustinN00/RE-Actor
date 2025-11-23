@@ -15,7 +15,7 @@ Here is a list of environment variables that are used to configure RE-Actor:
 | Variable Name | Description |
 |---------------|-------------|
 | `ACTION_NAME` | The name of the action you are using, will default to discord_webhook if not provided. Valid options are: `discord_webhook` or `smtp`. |
-| `LOG_LEVEL` | This variable is optional, but determines how verobose the logging will be. Here are the valid options: `DEBUG`, `INFO`, `WARNING`, and `ERROR`. The default value is `INFO`, if not set. |
+| `LOG_LEVEL` | Determines how verobose the logging will be. Here are the valid options: `DEBUG`, `INFO`, `WARNING`, and `ERROR`. The default value is `INFO`, if not set. |
 
 **Discord Webhook**
 | Variable Name | Description |
